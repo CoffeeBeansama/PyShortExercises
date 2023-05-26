@@ -1,8 +1,12 @@
-
+import PySimpleGUI as sg
 
 class BinaryTranslator:
 
     def __init__(self):
+
+
+        self.window_size = (800,400)
+        sg.theme("black")
 
         self.letters = []
 
@@ -15,20 +19,44 @@ class BinaryTranslator:
             "O": "01001111", "P": "01010000", "Q": "01010001", "R": "01010010", "S": "01010011", "T": "01010100", "U": "01010101", "V": "01010110","W" : "01010111", "X": "01011000", "Y": "01011001", "Z": "01011010", " " : ""
         }
 
+        self.layout = [
+            [sg.Text("Text to Binary")],
+            [sg.Multiline("Enter Text Here",key="-content-",size = (120,20),expand_y=False)],
+            [sg.Submit("Convert to binary",key="-convert-")]
 
-    def translate(self):
-
-        user_input = input("Enter Text: ")
-
-        print("Your text in binary is: ")
-        for i in range(len(user_input)):
+        ]
 
 
-            self.letters.append(self.lexicons[user_input[i]])
+        self.createWindow()
+
+
+
+
+    def createWindow(self):
+
+        self.window = sg.Window("Binary Translator", layout=self.layout,size=self.window_size)
+
+        while True:
+            event, values = self.window.read()
+
+            if event == sg.WINDOW_CLOSED:
+                break
+
+            if event == "-convert-":
+                self.translate(values["-content-"])
+
+
+
+    def translate(self,text):
+
+
+        for i in range(len(text)):
+
+
+            self.letters.append(self.lexicons[text[i]])
 
         self.letters.remove("")
-        print(self.letters)
+        self.window["-content-"].update(self.letters)
 
 
 translator = BinaryTranslator()
-translator.translate()
