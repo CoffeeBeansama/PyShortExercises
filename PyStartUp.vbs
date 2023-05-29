@@ -1,0 +1,1 @@
+CreateObject("Wscript.Shell").Run "C:\Users\Dell\PycharmProjects\PyShortExercises\PyStartUp.bat", 0 ,True
